@@ -97,12 +97,7 @@ public class APIStepDefs extends BasePage {
         @Then("following fields should not be null")
         public void following_fields_should_not_be_null(io.cucumber.datatable.DataTable dataTable){
             // Write code here that turns the phrase above into concrete actions
-            // For automatic transformation, change DataTable to one of
-            // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-            // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-            // Double, Byte, Short, Long, BigInteger or BigDecimal.
-            //
-            // For other transformations you can register a DataTableType.
+    //get everything in List and gor through for each
             List<String> fields = dataTable.asList(String.class);
             for (String field : fields) {
                 thenPart.body(field, notNullValue());
@@ -121,7 +116,7 @@ public class APIStepDefs extends BasePage {
     public void i_create_a_random_as_request_body(String string) {
         // Write code here that turns the phrase above into concrete actions
 randomBook = LibraryAPI_Util.getRandomBookMap();
-        System.out.println("randomBook = " + randomBook);
+        System.out.println("randomBook = " + randomBook); //print and copy the book
     }
     @When("I send POST request to {string} endpoint")
     public void i_send_post_request_to_endpoint(String endpoint) {
@@ -136,6 +131,7 @@ randomBook = LibraryAPI_Util.getRandomBookMap();
     @Then("the field value for {string} path should be equal to {string}")
     public void the_field_value_for_path_should_be_equal_to(String path, String expectedValue) {
         // Write code here that turns the phrase above into concrete actions
+        //getting json to get the actual value of the path?
         JsonPath jp = response.jsonPath();
         String actualValue = jp.getString(path);
         thenPart.body(path, is(expectedValue));
@@ -146,12 +142,11 @@ randomBook = LibraryAPI_Util.getRandomBookMap();
         thenPart.body(fieldName, notNullValue());
     }
 
-    //us03-sc2
+    //us03-sc2  //in progress
     @Given("I logged in Library UI as {string}")
     public void i_logged_in_library_ui_as(String userType) {
         // Write code here that turns the phrase above into concrete actions
-// You can implement the login process for the Library UI here
-        // For example, you can use Selenium or another
+//implement the login process for the Library UI here
         // UI testing framework to automate the login process
         loginPage.login(userType);
         WebElement librarian10Login = Driver.getDriver().findElement(By.xpath("//a[text()='Logout']"));
@@ -160,7 +155,7 @@ randomBook = LibraryAPI_Util.getRandomBookMap();
     @Given("I navigate to {string} page")
     public void i_navigate_to_page(String module) {
         // Write code here that turns the phrase above into concrete actions
-        // You can implement the navigation process to the specified page in the Library UI here
+        // implement the navigation process to the specified page in the Library UI here
 navigateModule(module);
 WebElement moduleHeader = Driver.getDriver().findElement(By.xpath("//*[text()='Book Management']"));
 Assert.assertTrue(moduleHeader.isDisplayed());
@@ -168,11 +163,9 @@ Assert.assertTrue(moduleHeader.isDisplayed());
     @Then("UI, Database and API created book information must match")
     public void ui_database_and_api_created_book_information_must_match() {
         // Write code here that turns the phrase above into concrete actions
-        // You can implement the verification process here to ensure that the book information created in the UI,
+        // implement the verification process here to ensure that the book information created in the UI,
         // Database, and API matches.
-        // For example, you can use the API to retrieve the book information and compare it with the information displayed in the UI
-        // and stored in the Database.
-        // You can use assertions or validation methods to check if the information matches.
+        // assertions or validation methods to check if the information matches.
     }
     }
 
