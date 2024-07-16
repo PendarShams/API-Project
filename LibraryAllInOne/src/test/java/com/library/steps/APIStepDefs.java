@@ -4,10 +4,7 @@ package com.library.steps;
 import com.library.pages.BasePage;
 import com.library.pages.BookPage;
 import com.library.pages.LoginPage;
-import com.library.utility.ConfigurationReader;
-import com.library.utility.DB_Util;
-import com.library.utility.Driver;
-import com.library.utility.LibraryAPI_Util;
+import com.library.utility.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -25,6 +22,7 @@ import org.openqa.selenium.support.FindBy;
 
 
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +36,11 @@ public class APIStepDefs extends BasePage {
 
     LoginPage loginPage=new LoginPage();
     BookPage bookPage=new BookPage();
+
     Map<String, Object> randomBook;
+    Map<String, Object> randomUser;
+    Map<String, String> tokenMap;
+    String tokenValue;
 
     @Given("I logged Library api as a {string}")
     public void i_logged_library_api_as_a(String userType) {
@@ -122,18 +124,34 @@ public class APIStepDefs extends BasePage {
         givenPart.header("Content-Type", expectedContentType);
     }
     @Given("I create a random {string} as request body")
-    public void i_create_a_random_as_request_body(String string) {
+    public void i_create_a_random_as_request_body(String module) {
         // Write code here that turns the phrase above into concrete actions
-randomBook = LibraryAPI_Util.getRandomBookMap();
-        System.out.println("randomBook = " + randomBook);
+        if (module.equalsIgnoreCase("book")) {
+            randomBook = LibraryAPI_Util.getRandomBookMap();
+        } else if (module.equalsIgnoreCase("user")) {
+            randomUser = LibraryAPI_Util.getRandomUserMap();
+        } else {
+            System.out.println("Invalid module. Please provide book or user.");
+        }
+
     }
     @When("I send POST request to {string} endpoint")
     public void i_send_post_request_to_endpoint(String endpoint) {
         // Write code here that turns the phrase above into concrete actions
-        RequestSpecification request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(randomBook);
-       // RequestSpecification request = givenPart.header("Content-Type", "application/json").body(randomBook);
-        response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
-        thenPart = response.then();
+        RequestSpecification request;
+        if (endpoint.equalsIgnoreCase("/add_book")) {
+            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(randomBook);
+            response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
+            thenPart = response.then();
+        } else if (endpoint.equalsIgnoreCase("/add_user")) {
+            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(randomUser);
+            response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
+            thenPart = response.then();
+        } else if (endpoint.equalsIgnoreCase("/decode")) {
+            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(tokenValue);
+            response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
+            thenPart = response.then();
+        }
         //randomBook = {name=The House of Mirth9, isbn=1037932439, year=1308, author=Apryl Kub,
         // book_category_id=1, description=Chuck Norris doesn't pair program.}
     }
@@ -172,7 +190,8 @@ Assert.assertTrue(moduleHeader.isDisplayed());
     @Then("UI, Database and API created book information must match")
     public void ui_database_and_api_created_book_information_must_match() {
         // Write code here that turns the phrase above into concrete actions
-//getting new book infos & UI ISBN from UI
+        //ISBN is unique
+        //getting new book infos & UI ISBN from UI
         bookPage.retrieveBookInfo();
         String authorStr = bookPage.getValueMap(randomBook, "author");
         String UIIsbn = bookPage.findTheISBNByAuthor(authorStr);
@@ -189,6 +208,53 @@ Assert.assertTrue(moduleHeader.isDisplayed());
         Assert.assertEquals(DBIsbn, APIIsbn);
 
     }
+
+    //us04
+    @Then("created user information should match with Database")
+    public void created_user_information_should_match_with_database() {
+//API and DB comparaison
+        String APIID = (String)randomUser.get("user_id");
+        System.out.println("API user id : "+ APIID);
+
+        String query = "select id from users where id='"+ APIID + "'";
+        DB_Util.runQuery(query);
+        String DBID = DB_Util.getCellValue(1, "id");
+        System.out.println("DBID = " + DBID);
+
+    }
+    @Then("created user should be able to login Library UI")
+    public void created_user_should_be_able_to_login_library_ui() {
+        String APIEmail = (String)randomUser.get("email");
+        String APIPassword = (String)randomUser.get("password");
+        loginPage.login(APIEmail, APIPassword);
+        BrowserUtil.waitFor(3);
+    }
+    @Then("created user name should appear in Dashboard Page")
+    public void created_user_name_should_appear_in_dashboard_page() {
+        BrowserUtil.waitFor(3);
+        String APIFullName = (String)randomUser.get("full_name");
+        WebElement dashBoardName = Driver.getDriver().findElement(By.xpath("//*[text()='"+ APIFullName + "']"));
+        Assert.assertTrue(dashBoardName.isDisplayed());
+
+    }
+
+    //us05
+
+    @Given("I logged Library api with credentials {string} and {string}")
+    public void i_logged_library_api_with_credentials_and(String email, String password) {
+        tokenValue = LibraryAPI_Util.getToken(email, password);
+      givenPart.header("Authorization", tokenValue);
+    }
+    @Given("I send token information as request body")
+    public void i_send_token_information_as_request_body() {
+        tokenMap = new HashMap<>();
+        tokenMap.put("token", tokenValue);
+
+        givenPart.body(tokenValue);
+    }
+
+
+
     }
 
 

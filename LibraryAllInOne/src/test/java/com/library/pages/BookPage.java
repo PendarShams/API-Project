@@ -87,7 +87,7 @@ public String getValueMap(Map<String, Object> map, String name) {
     if (authorObj instanceof String) {
         return (String) authorObj;
     } else {
-        System.out.println("Author not found or not a string.");
+        System.out.println("It in not found or not a string.");
     }
     return (String) authorObj;
 }

@@ -1,5 +1,5 @@
+@us04
 Feature: As a librarian, I want to create a new user
-  @us04
   Scenario: Create a new user API
     Given I logged Library api as a "librarian"
     And Accept header is "application/json"
@@ -11,8 +11,7 @@ Feature: As a librarian, I want to create a new user
     And the field value for "message" path should be equal to "The user has been created."
     And "user_id" field should not be null
 
-
-
+   @ui @db
   Scenario: Create a new user all layers
     Given I logged Library api as a "librarian"
     And Accept header is "application/json"
