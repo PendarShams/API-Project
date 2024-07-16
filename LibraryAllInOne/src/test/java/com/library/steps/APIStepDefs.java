@@ -247,10 +247,7 @@ Assert.assertTrue(moduleHeader.isDisplayed());
     }
     @Given("I send token information as request body")
     public void i_send_token_information_as_request_body() {
-        tokenMap = new HashMap<>();
-        tokenMap.put("token", tokenValue);
-
-        givenPart.body(tokenValue);
+        
     }
 
 
