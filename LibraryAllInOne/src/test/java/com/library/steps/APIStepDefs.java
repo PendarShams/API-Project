@@ -2,8 +2,10 @@ package com.library.steps;
 
 
 import com.library.pages.BasePage;
+import com.library.pages.BookPage;
 import com.library.pages.LoginPage;
 import com.library.utility.ConfigurationReader;
+import com.library.utility.DB_Util;
 import com.library.utility.Driver;
 import com.library.utility.LibraryAPI_Util;
 import io.cucumber.java.en.Given;
@@ -22,6 +24,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +37,7 @@ public class APIStepDefs extends BasePage {
     ValidatableResponse thenPart;
 
     LoginPage loginPage=new LoginPage();
+    BookPage bookPage=new BookPage();
     Map<String, Object> randomBook;
 
     @Given("I logged Library api as a {string}")
@@ -154,7 +158,7 @@ randomBook = LibraryAPI_Util.getRandomBookMap();
         // For example, you can use Selenium or another
         // UI testing framework to automate the login process
         loginPage.login(userType);
-        WebElement librarian10Login = Driver.getDriver().findElement(By.xpath("//a[text()='Logout']"));
+        WebElement librarian10Login = Driver.getDriver().findElement(By.xpath("//*[text()='Test Librarian 10']"));
         Assert.assertTrue(librarian10Login.isDisplayed());
     }
     @Given("I navigate to {string} page")
@@ -168,11 +172,22 @@ Assert.assertTrue(moduleHeader.isDisplayed());
     @Then("UI, Database and API created book information must match")
     public void ui_database_and_api_created_book_information_must_match() {
         // Write code here that turns the phrase above into concrete actions
-        // You can implement the verification process here to ensure that the book information created in the UI,
-        // Database, and API matches.
-        // For example, you can use the API to retrieve the book information and compare it with the information displayed in the UI
-        // and stored in the Database.
-        // You can use assertions or validation methods to check if the information matches.
+//getting new book infos & UI ISBN from UI
+        bookPage.retrieveBookInfo();
+        String authorStr = bookPage.getValueMap(randomBook, "author");
+        String UIIsbn = bookPage.findTheISBNByAuthor(authorStr);
+//getting ISBN from API
+        String APIIsbn = (String)randomBook.get("isbn");
+        System.out.println("API isbn : "+ APIIsbn);
+//getting ISBN from DB
+        String query = "select isbn from books where isbn = '"+ APIIsbn +"'";
+        DB_Util.runQuery(query);
+        String DBIsbn = DB_Util.getCellValue(1, "isbn");
+        System.out.println("DBIsbn = " + DBIsbn);
+//Assertions
+        Assert.assertEquals(DBIsbn, UIIsbn);
+        Assert.assertEquals(DBIsbn, APIIsbn);
+
     }
     }
 

@@ -1,7 +1,8 @@
+@us03 @ui @db
 Feature: As a librarian, I want to create a new book
 
 
-  @us03-sc1
+  #@us03-sc1
   Scenario: Create a new book API
     Given I logged Library api as a "librarian"
     And Accept header is "application/json"
@@ -13,8 +14,8 @@ Feature: As a librarian, I want to create a new book
     And the field value for "message" path should be equal to "The book has been created."
     And "book_id" field should not be null
 
-
-  @us03-sc2
+@ui @db
+  #@us03-sc2
   Scenario: Create a new book all layers
     Given I logged Library api as a "librarian"
     And Accept header is "application/json"

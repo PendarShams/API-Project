@@ -74,7 +74,7 @@ $(document).ready(function() {
   <tbody>
     <tr class="info">
       <td>No Name (add projectName to cucumber-reporting.properties)</td>
-      <td>14 Jul. 2024, 21:10</td>
+      <td>15 Jul. 2024, 20:24</td>
     </tr>
   </tbody>
 </table>
@@ -128,17 +128,17 @@ $(document).ready(function() {
         <tr>
           <td class="tagname">@us03-sc2</td>
           <td      class="passed"    >4</td>
-          <td >0</td>
+          <td      class="failed"    >1</td>
           <td     class="skipped"   >7</td>
           <td >0</td>
-          <td   class="undefined" >1</td>
+          <td >0</td>
           <td class="total">12</td>
 
           <td >0</td>
           <td  class="failed"    >1</td>
           <td class="total">1</td>
 
-          <td class="duration" data-value="1804000">0.001</td>
+          <td class="duration" data-value="7094486000">7.094</td>
           <td class="failed">Failed</td>
         </tr>
         </tbody>
@@ -181,7 +181,7 @@ $(document).ready(function() {
 </div>
 
 
-  <span class="lead-duration duration">0.001</span>
+  <span class="lead-duration duration">7.094</span>
 
 
   <span data-toggle="collapse" class=" collapsable-control" data-target="#element-1">
@@ -224,7 +224,7 @@ $(document).ready(function() {
   <span class="keyword indention">Given</span>
   <span class="name">I logged Library api as a <span class="argument">&quot;librarian&quot;</span></span>
 
-  <span class="lead-duration duration">0.000</span>
+  <span class="lead-duration duration">6.793</span>
 
 </div>
 
@@ -278,7 +278,7 @@ $(document).ready(function() {
   <span class="keyword indention">And</span>
   <span class="name">Request Content Type header is <span class="argument">&quot;application/x-www-form-urlencoded&quot;</span></span>
 
-  <span class="lead-duration duration">0.000</span>
+  <span class="lead-duration duration">0.001</span>
 
 </div>
 
@@ -305,7 +305,7 @@ $(document).ready(function() {
   <span class="keyword indention">And</span>
   <span class="name">I create a random <span class="argument">&quot;book&quot;</span> as request body</span>
 
-  <span class="lead-duration duration">0.000</span>
+  <span class="lead-duration duration">0.241</span>
 
 </div>
 
@@ -328,11 +328,11 @@ $(document).ready(function() {
       <div class="step">
 
 
-<div class="brief step-name-And undefined">
+<div class="brief step-name-And failed">
   <span class="keyword indention">And</span>
-  <span class="name">I logged in Library UI as &quot;librarian&quot;</span>
+  <span class="name">I logged in Library UI as <span class="argument">&quot;librarian&quot;</span></span>
 
-  <span class="lead-duration duration">0.000</span>
+  <span class="lead-duration duration">0.056</span>
 
 </div>
 
@@ -340,6 +340,48 @@ $(document).ready(function() {
 
 
 
+
+  <div class="inner-level">
+    <div class="message indention">
+      <div data-toggle="collapse" class=" collapsable-control" data-target="#msg-3">
+          <a>org.openqa.selenium.NoSuchElementException:</a>
+      </div>
+      <div id="msg-3" class="collapse collapsable-details  in ">
+        <pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;#inputEmail&quot;}
+  (Session info: chrome=126.0.6478.127)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Mac OS X', os.arch: 'aarch64', os.version: '14.5', java.version: '17.0.9'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [189f9b5dac73d3c97f09202b431d0b37, findElement {using=id, value=inputEmail}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 126.0.6478.127, chrome: {chromedriverVersion: 126.0.6478.126 (d36ace6122e..., userDataDir: /var/folders/d4/k_9xqdgn7zv...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54866}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: mac, proxy: Proxy(), se:cdp: ws://localhost:54866/devtoo..., se:cdpVersion: 126.0.6478.127, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 189f9b5dac73d3c97f09202b431d0b37
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:191)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:200)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:175)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:607)
+	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:165)
+	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:66)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:364)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:358)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:68)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at jdk.proxy2/jdk.proxy2.$Proxy22.sendKeys(Unknown Source)
+	at com.library.pages.LoginPage.login(LoginPage.java:33)
+	at com.library.steps.APIStepDefs.i_logged_in_library_ui_as(APIStepDefs.java:160)
+	at &#10045;.I logged in Library UI as &quot;librarian&quot;(file:///Users/penair/IdeaProjects/API-Project/LibraryAllInOne/src/test/resources/features/rest/us03.feature:23)
+</pre>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -357,7 +399,7 @@ $(document).ready(function() {
 
 <div class="brief step-name-And skipped">
   <span class="keyword indention">And</span>
-  <span class="name">I navigate to &quot;Books&quot; page</span>
+  <span class="name">I navigate to <span class="argument">&quot;Books&quot;</span> page</span>
 
   <span class="lead-duration duration">0.000</span>
 
