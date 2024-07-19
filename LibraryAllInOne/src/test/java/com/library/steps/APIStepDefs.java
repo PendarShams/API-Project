@@ -148,7 +148,7 @@ public class APIStepDefs extends BasePage {
     @When("I send POST request to {string} endpoint")
     public void i_send_post_request_to_endpoint(String endpoint) {
         // Write code here that turns the phrase above into concrete actions
-//        RequestSpecification request;
+        RequestSpecification request;
         if (endpoint.equalsIgnoreCase("/add_book")) {
 //            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(randomBook);
 //            response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
@@ -158,12 +158,12 @@ public class APIStepDefs extends BasePage {
 
             //thenPart = response.then();
         } else if (endpoint.equalsIgnoreCase("/add_user")) {
-//            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(randomUser);
-            response = givenPart.post(baseURI + endpoint);
+        request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(randomUser);
+            response = request.post(baseURI + endpoint);
 
             //thenPart = response.then();
         } else if (endpoint.equalsIgnoreCase("/decode")) {
-//            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(tokenValue);
+//           request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(tokenValue);
             response = givenPart.when().post(baseURI + endpoint);
             //thenPart = response.then();
         }
