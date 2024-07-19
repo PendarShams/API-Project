@@ -15,7 +15,6 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -26,9 +25,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class APIStepDefs extends BasePage {
@@ -151,7 +148,7 @@ public class APIStepDefs extends BasePage {
             response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
             thenPart = response.then();
         } else if (endpoint.equalsIgnoreCase("/decode")) {
-            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON);
+            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(tokenValue);
             response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
             thenPart = response.then();
         }
@@ -246,13 +243,14 @@ Assert.assertTrue(moduleHeader.isDisplayed());
     @Given("I logged Library api with credentials {string} and {string}")
     public void i_logged_library_api_with_credentials_and(String email, String password) {
         tokenValue = LibraryAPI_Util.getToken(email, password);
-        givenPart.header("Authorization", tokenValue);
+      givenPart.header("Authorization", tokenValue);
     }
     @Given("I send token information as request body")
     public void i_send_token_information_as_request_body() {
-        givenPart
-                .formParam("token", tokenValue);
+        tokenMap = new HashMap<>();
+        tokenMap.put("token", tokenValue);
 
+        givenPart.body(tokenValue);
     }
 
 
