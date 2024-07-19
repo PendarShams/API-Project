@@ -137,8 +137,10 @@ public class APIStepDefs extends BasePage {
         // Write code here that turns the phrase above into concrete actions
         if (module.equalsIgnoreCase("book")) {
             randomBook = LibraryAPI_Util.getRandomBookMap();
+            System.out.println("randomBook = " + randomBook);
         } else if (module.equalsIgnoreCase("user")) {
             randomUser = LibraryAPI_Util.getRandomUserMap();
+            System.out.println("randomUser = " + randomUser);
         } else {
             System.out.println("Invalid module. Please provide book or user.");
         }
@@ -150,11 +152,11 @@ public class APIStepDefs extends BasePage {
         // Write code here that turns the phrase above into concrete actions
         RequestSpecification request;
         if (endpoint.equalsIgnoreCase("/add_book")) {
-//            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(randomBook);
-//            response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
-            response=givenPart.when().post(baseURI + endpoint);
-            JsonPath jsonPath = response.jsonPath();
-            jsonPath.getString("book_id");
+            request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(randomBook);
+            response = request.when().post(ConfigurationReader.getProperty("library.baseUri") + endpoint);
+            //response=givenPart.when().post(baseURI + endpoint);
+           // JsonPath jsonPath = response.jsonPath();
+           // jsonPath.getString("book_id");
 
             //thenPart = response.then();
         } else if (endpoint.equalsIgnoreCase("/add_user")) {
@@ -163,7 +165,7 @@ public class APIStepDefs extends BasePage {
 
             //thenPart = response.then();
         } else if (endpoint.equalsIgnoreCase("/decode")) {
-//           request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(tokenValue);
+          // request = givenPart.accept(ContentType.JSON).and().contentType(ContentType.JSON).body(tokenValue);
             response = givenPart.when().post(baseURI + endpoint);
             //thenPart = response.then();
         }

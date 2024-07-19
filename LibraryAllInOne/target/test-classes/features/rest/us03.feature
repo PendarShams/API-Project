@@ -1,4 +1,4 @@
-@us03 @ui @db
+@us03 @ui @db @Smoke
 Feature: As a librarian, I want to create a new book
 
 
