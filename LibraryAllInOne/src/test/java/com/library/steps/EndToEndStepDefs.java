@@ -18,17 +18,14 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 
-import java.sql.ResultSet;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.*;
 
-public class APIStepDefs extends BasePage {
+public class EndToEndStepDefs extends BasePage {
 
     RequestSpecification givenPart = RestAssured.given().log().uri();
     Response response;
@@ -45,7 +42,7 @@ public class APIStepDefs extends BasePage {
 
     @Given("I logged Library api as a {string}")
     public void i_logged_library_api_as_a(String userType) {
-        givenPart.header("x-library-token", LibraryAPI_Util.getToken(userType));
+        givenPart.header("x-library-token", LibraryAPIUtil.getToken(userType));
     }
 
     @Given("Accept header is {string}")
@@ -115,7 +112,6 @@ public class APIStepDefs extends BasePage {
         // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
         // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
         // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
         // For other transformations you can register a DataTableType.
         List<String> fields = dataTable.asList(String.class);
         for (String field : fields) {
@@ -136,10 +132,10 @@ public class APIStepDefs extends BasePage {
     public void i_create_a_random_as_request_body(String module) {
         // Write code here that turns the phrase above into concrete actions
         if (module.equalsIgnoreCase("book")) {
-            randomBook = LibraryAPI_Util.getRandomBookMap();
+            randomBook = LibraryAPIUtil.getRandomBookMap();
             System.out.println("randomBook = " + randomBook);
         } else if (module.equalsIgnoreCase("user")) {
-            randomUser = LibraryAPI_Util.getRandomUserMap();
+            randomUser = LibraryAPIUtil.getRandomUserMap();
             System.out.println("randomUser = " + randomUser);
         } else {
             System.out.println("Invalid module. Please provide book or user.");
@@ -222,8 +218,8 @@ public class APIStepDefs extends BasePage {
         System.out.println("API isbn : " + APIIsbn);
 //getting ISBN from DB
         String query = "select isbn from books where isbn = '" + APIIsbn + "'";
-        DB_Util.runQuery(query);
-        String DBIsbn = DB_Util.getCellValue(1, "isbn");
+        DBUtil.runQuery(query);
+        String DBIsbn = DBUtil.getCellValue(1, "isbn");
         System.out.println("DBIsbn = " + DBIsbn);
 //Assertions
         Assert.assertEquals(DBIsbn, UIIsbn);
@@ -239,8 +235,8 @@ public class APIStepDefs extends BasePage {
         System.out.println("API user id : " + APIID);
 
         String query = "select id from users where id='" + APIID + "'";
-        DB_Util.runQuery(query);
-        String DBID = DB_Util.getCellValue(1, "id");
+        DBUtil.runQuery(query);
+        String DBID = DBUtil.getCellValue(1, "id");
         System.out.println("DBID = " + DBID);
 
     }
@@ -266,7 +262,7 @@ public class APIStepDefs extends BasePage {
 
     @Given("I logged Library api with credentials {string} and {string}")
     public void i_logged_library_api_with_credentials_and(String email, String password) {
-        tokenValue = LibraryAPI_Util.getToken(email, password);
+        tokenValue = LibraryAPIUtil.getToken(email, password);
         givenPart.header("Authorization", tokenValue);
     }
 

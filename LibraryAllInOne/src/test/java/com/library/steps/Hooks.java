@@ -4,7 +4,7 @@ package com.library.steps;
 
 
 import com.library.utility.ConfigurationReader;
-import com.library.utility.DB_Util;
+import com.library.utility.DBUtil;
 import com.library.utility.Driver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -13,7 +13,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class Hooks {
 
@@ -39,13 +38,13 @@ public class Hooks {
     @Before("@db")
     public void setUpDB(){
         System.out.println("Connecting to database...");
-        DB_Util.createConnection();
+        DBUtil.createConnection();
     }
 
     @After("@db")
     public void tearDownDB(){
         System.out.println("close database connection...");
-        DB_Util.destroy();
+        DBUtil.destroy();
     }
 
 }

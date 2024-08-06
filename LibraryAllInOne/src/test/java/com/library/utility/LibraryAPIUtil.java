@@ -1,16 +1,14 @@
 package com.library.utility;
 
 import com.github.javafaker.Faker;
-import com.library.pages.BookPage;
 import io.restassured.http.ContentType;
-import org.junit.Assert;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public class LibraryAPI_Util {
+public class LibraryAPIUtil {
 
 
     /**
